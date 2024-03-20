@@ -1,29 +1,23 @@
+import { Dialog, Transition } from '@headlessui/react';
+import {
+  ChatBubbleOvalLeftEllipsisIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
+import { Fragment } from 'react';
 import classNames from '../modules/classNames';
-import {
-  ChatIcon,
-  XIcon,
-} from '@heroicons/react/outline'
-import {
-  Dialog,
-  Transition,
-} from '@headlessui/react';
-import {
-  Fragment,
-  useEffect,
-  useState,
-} from 'react';
+import { useMobileMenuContext } from '../providers/MobileMenuContext';
 
 const sidebarNavigation = [
-  { name: 'Inbox', href: '#', icon: ChatIcon, current: true },
+  {
+    name: 'Inbox',
+    href: '#',
+    icon: ChatBubbleOvalLeftEllipsisIcon,
+    current: true,
+  },
 ];
 
-export default function Navigation({ mobileMenuOpen }) {
-  const [ hasMobileMenuOpen, setMobileMenuOpen ] = useState(false);
-
-  useEffect(() => {
-    setMobileMenuOpen(mobileMenuOpen);
-  }, [ mobileMenuOpen ]);
-
+export default function Navigation() {
+  const { mobileMenuOpen, setMobileMenuOpen } = useMobileMenuContext();
 
   return (
     <>
@@ -43,15 +37,19 @@ export default function Navigation({ mobileMenuOpen }) {
                 key={item.name}
                 href={item.href}
                 className={classNames(
-                  item.current ? 'bg-indigo-800 text-white' : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
-                  'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium',
+                  item.current
+                    ? 'bg-indigo-800 text-white'
+                    : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
+                  'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium'
                 )}
                 aria-current={item.current ? 'page' : undefined}
               >
                 <item.icon
                   className={classNames(
-                    item.current ? 'text-white' : 'text-indigo-300 group-hover:text-white',
-                    'h-6 w-6',
+                    item.current
+                      ? 'text-white'
+                      : 'text-indigo-300 group-hover:text-white',
+                    'h-6 w-6'
                   )}
                   aria-hidden="true"
                 />
@@ -63,8 +61,12 @@ export default function Navigation({ mobileMenuOpen }) {
       </div>
 
       {/* Mobile menu */}
-      <Transition.Root show={hasMobileMenuOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-20 md:hidden" onClose={setMobileMenuOpen}>
+      <Transition.Root show={mobileMenuOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-20 md:hidden"
+          onClose={setMobileMenuOpen}
+        >
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"
@@ -103,7 +105,10 @@ export default function Navigation({ mobileMenuOpen }) {
                       className="h-12 w-12 rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-white"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                      <XMarkIcon
+                        className="h-6 w-6 text-white"
+                        aria-hidden="true"
+                      />
                       <span className="sr-only">Close sidebar</span>
                     </button>
                   </div>
@@ -126,14 +131,16 @@ export default function Navigation({ mobileMenuOpen }) {
                             item.current
                               ? 'bg-indigo-800 text-white'
                               : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
-                            'group py-2 px-3 rounded-md flex items-center text-sm font-medium',
+                            'group py-2 px-3 rounded-md flex items-center text-sm font-medium'
                           )}
                           aria-current={item.current ? 'page' : undefined}
                         >
                           <item.icon
                             className={classNames(
-                              item.current ? 'text-white' : 'text-indigo-300 group-hover:text-white',
-                              'mr-3 h-6 w-6',
+                              item.current
+                                ? 'text-white'
+                                : 'text-indigo-300 group-hover:text-white',
+                              'mr-3 h-6 w-6'
                             )}
                             aria-hidden="true"
                           />

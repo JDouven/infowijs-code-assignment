@@ -1,16 +1,18 @@
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
-import dayjs from 'dayjs';
 
-var relativeTime = require('dayjs/plugin/relativeTime')
-var localizedFormat = require('dayjs/plugin/localizedFormat')
-dayjs.extend(relativeTime)
-dayjs.extend(localizedFormat)
+dayjs.extend(relativeTime);
+dayjs.extend(localizedFormat);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 root.render(
   <React.StrictMode>
     <App />
