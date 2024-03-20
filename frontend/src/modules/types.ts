@@ -1,17 +1,39 @@
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
-export type Person = {
-  name: string;
-  imageUrl: string;
-  title?: string;
-  email?: string;
-  telephone?: string;
-};
+export class Person {
+  constructor(
+    public name: string,
+    public avatar: string,
+    public title?: string,
+    public email?: string,
+    public phone?: string
+  ) {}
 
-export type ActivityItem = {
-  id: number;
-  message: string;
-  person: Person;
-  datetime: Dayjs;
-  title?: string;
-};
+  static fromJSON(json: any): Person {
+    return new Person(
+      json.name,
+      json.avatar,
+      json.title,
+      json.email,
+      json.phone
+    );
+  }
+}
+
+export class Message {
+  constructor(
+    public id: number,
+    public message: string,
+    public person: Person,
+    public datetime: Dayjs
+  ) {}
+
+  static fromJSON(json: any): Message {
+    return new Message(
+      json.id,
+      json.message,
+      Person.fromJSON(json.person),
+      dayjs(json.datetime)
+    );
+  }
+}

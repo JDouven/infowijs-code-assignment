@@ -1,19 +1,19 @@
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
+import { Person } from '../modules/types';
 
-const people = [
+const people: Person[] = [
   {
     email: 'collega-a@bedrijf.nl',
     name: 'Silvia van Buren',
     title: 'Front Office',
-    imageUrl: 'https://randomuser.me/api/portraits/women/75.jpg',
-    telephone: '+31600000000',
+    avatar: 'https://randomuser.me/api/portraits/women/75.jpg',
+    phone: '+31600000000',
   },
   {
     email: 'hans@bedrijf.nl',
     name: 'Hans van Willigen',
     title: 'Lead Developer',
-    imageUrl: 'https://randomuser.me/api/portraits/men/75.jpg',
-    telephone: null,
+    avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
   },
 ];
 
@@ -38,7 +38,7 @@ export default function Contacts() {
             </div>
             <img
               className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
-              src={person.imageUrl}
+              src={person.avatar}
               alt=""
             />
           </div>
@@ -58,7 +58,7 @@ export default function Contacts() {
               </div>
               <div className="-ml-px w-0 flex-1 flex">
                 <a
-                  href={`tel:${person.telephone}`}
+                  href={`tel:${person.phone}`}
                   className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
                 >
                   <PhoneIcon
