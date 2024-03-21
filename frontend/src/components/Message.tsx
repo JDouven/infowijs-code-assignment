@@ -19,7 +19,7 @@ export default function Message({ message, person, datetime }: Props) {
               {datetime.fromNow()}
             </p>
           </div>
-          <p className="text-sm text-gray-500">{message}</p>
+          <p className="text-sm text-gray-500 whitespace-pre-line">{message}</p>
         </div>
       </div>
     </li>
