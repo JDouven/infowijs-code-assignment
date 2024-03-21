@@ -19,4 +19,15 @@ data class Person(
         }
         .put("phone", phone)
   }
+
+  companion object {
+    fun fromJsonObject(json: JsonObject): Person {
+      return Person(
+          json.getString("name"),
+          json.getString("avatar"),
+          json.getString("email"),
+          json.getString("phone")
+      )
+    }
+  }
 }

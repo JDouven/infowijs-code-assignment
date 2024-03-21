@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -5,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
+import AppState from './providers/AppState';
 import reportWebVitals from './reportWebVitals';
 
 dayjs.extend(relativeTime);
@@ -13,9 +15,16 @@ dayjs.extend(localizedFormat);
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <AppState>
+        <App />
+      </AppState>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
