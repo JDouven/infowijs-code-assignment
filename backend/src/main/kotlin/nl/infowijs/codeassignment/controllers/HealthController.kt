@@ -1,11 +1,12 @@
 package nl.infowijs.codeassignment.controllers
 
-import io.vertx.core.Handler
 import io.vertx.ext.web.RoutingContext
+import nl.infowijs.codeassignment.utils.ResponseUtils.buildOkResponse
 
 class HealthController {
   companion object {
-    val healthCheck =
-        Handler<RoutingContext> { req -> req.response().setStatusCode(200).end("Remove this.") }
+    fun healthCheck(routingContext: RoutingContext) {
+      buildOkResponse(routingContext, "Healthy")
+    }
   }
 }

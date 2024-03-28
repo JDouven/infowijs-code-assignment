@@ -1,4 +1,4 @@
-package nl.infowijs.codeassignment
+package nl.infowijs.codeassignment.verticle
 
 import io.vertx.core.Vertx
 import io.vertx.junit5.VertxExtension
@@ -12,7 +12,7 @@ class TestMainVerticle {
 
   @BeforeEach
   fun deploy_verticle(vertx: Vertx, testContext: VertxTestContext) {
-    vertx.deployVerticle(MainVerticle(), testContext.succeeding<String> { _ -> testContext.completeNow() })
+    vertx.deployVerticle(MainVerticle(), testContext.succeeding { _ -> testContext.completeNow() })
   }
 
   @Test
