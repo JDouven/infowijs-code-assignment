@@ -20,7 +20,7 @@ class ChatController(private val chatService: ChatService) {
 
   fun create(routingContext: RoutingContext) {
     val result = Validator
-      .create(Chat.schema, JsonSchemaOptions().setDraft(Draft.DRAFT7))
+      .create(Chat.SCHEMA, JsonSchemaOptions().setDraft(Draft.DRAFT7))
       .validate(routingContext.body().asJsonObject())
     if(!result.valid) {
       return buildErrorResponse(routingContext, result.errors)

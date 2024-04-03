@@ -13,6 +13,13 @@ class MessageService(private val dbClient: Pool, private val messageRepository: 
       .onFailure { println("Error: ${it.message}") }
   }
 
+  fun readLastFromChat(chatId: Int): Future<Message> {
+    return dbClient
+      .withTransaction { messageRepository.selectLastWhereChatId(it, chatId) }
+      .onSuccess { println("Read last message from chat $chatId") }
+      .onFailure { println("Error: ${it.message}") }
+  }
+
   fun create(message: Message): Future<Message> {
     return dbClient
       .withTransaction { messageRepository.create(it, message) }
