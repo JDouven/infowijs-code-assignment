@@ -2,24 +2,22 @@ import { Menu, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
-import Chat from './components/Chat';
-import Contacts from './components/Contacts';
-import Navigation from './components/Navigation';
-import NewMessage from './components/NewMessage';
-import classNames from './modules/classNames';
-import { useMobileMenuContext } from './providers/MobileMenuContext';
-import { useNewMessageDialogContext } from './providers/NewMessageDialogContext';
+import { Outlet } from 'react-router-dom';
+import Contacts from '../components/Contacts';
+import Navigation from '../components/Navigation';
+import classNames from '../modules/classNames';
+import { useMobileMenuContext } from '../providers/MobileMenuContext';
+import { useNewMessageDialogContext } from '../providers/NewMessageDialogContext';
 
 const userNavigation = [{ name: 'Your Profile?', href: '#' }];
 
-export default function App() {
+export default function Root() {
   const { setMobileMenuOpen } = useMobileMenuContext();
   const { setNewMessageDialogOpen } = useNewMessageDialogContext();
 
   return (
     <div className="h-full flex">
       <Navigation />
-      <NewMessage />
       {/* Content area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="w-full">
@@ -119,11 +117,7 @@ export default function App() {
               aria-labelledby="primary-heading"
               className="min-w-0 flex-1 h-full flex flex-col lg:order-last"
             >
-              <h1 id="primary-heading" className="sr-only">
-                Messages
-              </h1>
-
-              <Chat />
+              <Outlet />
             </section>
           </main>
 

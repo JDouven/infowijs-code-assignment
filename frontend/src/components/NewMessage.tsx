@@ -2,30 +2,35 @@ import { Dialog, Transition } from '@headlessui/react';
 import { PaperAirplaneIcon } from '@heroicons/react/20/solid';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { Fragment } from 'react/jsx-runtime';
 import { people } from '../modules/fakeData';
-import { Message, Person } from '../modules/types';
+import { MessageData, PersonData } from '../modules/types';
 import { useNewMessageDialogContext } from '../providers/NewMessageDialogContext';
+import { Params } from '../routes/router';
 
 type NewMessageData = {
   message: string;
-  person: Person;
+  person: PersonData;
 };
 
-async function postMessage(message: NewMessageData): Promise<Message> {
-  const response = await fetch('http://localhost:8888/messages', {
+async function postMessage(
+  chatId: number,
+  message: NewMessageData
+): Promise<MessageData> {
+  const response = await fetch(`http://localhost:8888/chats/${chatId}`, {
     method: 'POST',
     body: JSON.stringify(message),
   });
-  return response.json().then((json) => Message.fromJSON(json.data));
+  return response.json().then((json) => MessageData.fromJSON(json.data));
 }
 
-function useNewMessageMutation() {
+function useNewMessageMutation(chatId: number) {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: postMessage,
+  return useMutation<MessageData, Error, NewMessageData>({
+    mutationFn: (data) => postMessage(chatId, data),
     onSuccess: (message) => {
-      queryClient.setQueryData<Message[]>(['messages'], (oldData) =>
+      queryClient.setQueryData<MessageData[]>(['messages'], (oldData) =>
         oldData ? [message, ...oldData] : [message]
       );
     },
@@ -45,7 +50,10 @@ export default function NewMessage() {
     reset,
     formState: { errors },
   } = useForm<Inputs>();
-  const mutation = useNewMessageMutation();
+
+  // useParams can return undefined if the route doesn't have any params but we know that's not the case
+  const { chatId } = useParams<keyof Params>() as Params;
+  const mutation = useNewMessageMutation(parseInt(chatId));
 
   const onSubmit: SubmitHandler<Inputs> = (data) =>
     mutation.mutate(

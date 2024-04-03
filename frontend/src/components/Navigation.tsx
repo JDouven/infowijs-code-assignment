@@ -4,15 +4,15 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
+import { NavLink } from 'react-router-dom';
 import classNames from '../modules/classNames';
 import { useMobileMenuContext } from '../providers/MobileMenuContext';
 
 const sidebarNavigation = [
   {
-    name: 'Inbox',
-    href: '#',
+    name: 'Chats',
+    to: '/',
     icon: ChatBubbleOvalLeftEllipsisIcon,
-    current: true,
   },
 ];
 
@@ -33,28 +33,33 @@ export default function Navigation() {
           </div>
           <div className="flex-1 mt-6 w-full px-2 space-y-1">
             {sidebarNavigation.map((item) => (
-              <a
+              <NavLink
                 key={item.name}
-                href={item.href}
-                className={classNames(
-                  item.current
-                    ? 'bg-indigo-800 text-white'
-                    : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
-                  'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium'
-                )}
-                aria-current={item.current ? 'page' : undefined}
+                to={item.to}
+                className={({ isActive }) =>
+                  classNames(
+                    isActive
+                      ? 'bg-indigo-800 text-white'
+                      : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
+                    'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium'
+                  )
+                }
               >
-                <item.icon
-                  className={classNames(
-                    item.current
-                      ? 'text-white'
-                      : 'text-indigo-300 group-hover:text-white',
-                    'h-6 w-6'
-                  )}
-                  aria-hidden="true"
-                />
-                <span className="mt-2">{item.name}</span>
-              </a>
+                {({ isActive }) => (
+                  <>
+                    <item.icon
+                      className={classNames(
+                        isActive
+                          ? 'text-white'
+                          : 'text-indigo-300 group-hover:text-white',
+                        'h-6 w-6'
+                      )}
+                      aria-hidden="true"
+                    />
+                    <span className="mt-2">{item.name}</span>
+                  </>
+                )}
+              </NavLink>
             ))}
           </div>
         </div>
@@ -124,28 +129,33 @@ export default function Navigation() {
                   <nav className="h-full flex flex-col">
                     <div className="space-y-1">
                       {sidebarNavigation.map((item) => (
-                        <a
+                        <NavLink
                           key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current
-                              ? 'bg-indigo-800 text-white'
-                              : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
-                            'group py-2 px-3 rounded-md flex items-center text-sm font-medium'
-                          )}
-                          aria-current={item.current ? 'page' : undefined}
+                          to={item.to}
+                          className={({ isActive }) =>
+                            classNames(
+                              isActive
+                                ? 'bg-indigo-800 text-white'
+                                : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
+                              'group py-2 px-3 rounded-md flex items-center text-sm font-medium'
+                            )
+                          }
                         >
-                          <item.icon
-                            className={classNames(
-                              item.current
-                                ? 'text-white'
-                                : 'text-indigo-300 group-hover:text-white',
-                              'mr-3 h-6 w-6'
-                            )}
-                            aria-hidden="true"
-                          />
-                          <span>{item.name}</span>
-                        </a>
+                          {({ isActive }) => (
+                            <>
+                              <item.icon
+                                className={classNames(
+                                  isActive
+                                    ? 'text-white'
+                                    : 'text-indigo-300 group-hover:text-white',
+                                  'mr-3 h-6 w-6'
+                                )}
+                                aria-hidden="true"
+                              />
+                              <span>{item.name}</span>
+                            </>
+                          )}
+                        </NavLink>
                       ))}
                     </div>
                   </nav>
