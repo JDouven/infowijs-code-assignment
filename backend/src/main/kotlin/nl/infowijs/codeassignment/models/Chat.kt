@@ -7,7 +7,7 @@ import io.vertx.json.schema.draft7.dsl.Keywords.maxLength
 
 data class Chat(
   var id: Int,
-  @JsonProperty("user_id") var userId: Int,
+  @JsonProperty("owner_id") var ownerId: Int,
   @JsonProperty("person_id") var personId: Int,
   val name: String
 ) {

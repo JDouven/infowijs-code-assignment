@@ -6,9 +6,9 @@ VALUES (0, 'Hans van Maanen', 'https://randomuser.me/api/portraits/men/12.jpg', 
 
 ALTER SEQUENCE persons_id_seq INCREMENT BY 4;
 
-INSERT INTO chats (id, person_id, name)
-VALUES (0, 0, 'Hans van Maanen'),
-       (1, 3, 'Monique Willems');
+INSERT INTO chats (id, owner_id, person_id, name)
+VALUES (0, 0, 0, 'Hans van Maanen'),
+       (1, 0, 3, 'Monique Willems');
 
 ALTER SEQUENCE chats_id_seq INCREMENT BY 2;
 
