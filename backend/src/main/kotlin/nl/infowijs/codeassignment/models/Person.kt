@@ -13,7 +13,7 @@ data class Person(
   val phone: String? = null
 ) {
   companion object {
-    val schema: JsonSchema = JsonSchema.of(
+    val SCHEMA: JsonSchema = JsonSchema.of(
       objectSchema()
         .requiredProperty("name", stringSchema().with(maxLength(128)))
         .requiredProperty("avatar", stringSchema().with(maxLength(512)))

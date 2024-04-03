@@ -22,11 +22,11 @@ CREATE TABLE IF NOT EXISTS chats
 
 CREATE TABLE IF NOT EXISTS messages
 (
-  id       SERIAL  NOT NULL,
-  chat_id  INTEGER NOT NULL,
-  sender   VARCHAR NOT NULL,
-  message  VARCHAR NOT NULL,
-  datetime VARCHAR NOT NULL DEFAULT to_json(now()) #>> '{}',
+  id        SERIAL  NOT NULL,
+  chat_id   INTEGER NOT NULL,
+  sender_id INTEGER NOT NULL,
+  message   VARCHAR NOT NULL,
+  datetime  VARCHAR NOT NULL DEFAULT to_json(now()) #>> '{}',
   PRIMARY KEY (id),
   CONSTRAINT fk_chat_id
     FOREIGN KEY (chat_id)

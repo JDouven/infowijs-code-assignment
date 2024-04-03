@@ -20,11 +20,19 @@ class MessageController(private val messageService: MessageService) {
       .onFailure { routingContext.fail(it) }
   }
 
+  fun readLast(routingContext: RoutingContext) {
+    val chatId: Int = routingContext.request().getParam("chatId").toInt()
+    messageService
+      .readLastFromChat(chatId)
+      .onSuccess { buildOkResponse(routingContext, it) }
+      .onFailure { routingContext.fail(it) }
+  }
+
   fun create(routingContext: RoutingContext) {
     val result = Validator
-      .create(Message.schema, JsonSchemaOptions().setDraft(Draft.DRAFT7))
+      .create(Message.SCHEMA, JsonSchemaOptions().setDraft(Draft.DRAFT7))
       .validate(routingContext.body().asJsonObject())
-    if(!result.valid) {
+    if (!result.valid) {
       return buildErrorResponse(routingContext, result.errors)
     }
     val message: Message = result.toJson().mapTo(Message::class.java)

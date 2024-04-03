@@ -11,17 +11,19 @@ object ResponseUtils {
   private const val APPLICATION_JSON: String = "application/json"
 
   fun buildOkResponse(rc: RoutingContext, data: Any) {
+    val body = JsonObject().put("data", data)
     rc.response()
       .setStatusCode(200)
       .putHeader(CONTENT_TYPE_HEADER, APPLICATION_JSON)
-      .end(Json.encodePrettily(data))
+      .end(Json.encodePrettily(body))
   }
 
   fun buildCreatedResponse(rc: RoutingContext, data: Any) {
+    val body = JsonObject().put("data", data)
     rc.response()
       .setStatusCode(201)
       .putHeader(CONTENT_TYPE_HEADER, APPLICATION_JSON)
-      .end(Json.encodePrettily(data))
+      .end(Json.encodePrettily(body))
   }
 
   fun buildErrorResponse(rc: RoutingContext, throwable: Throwable) {

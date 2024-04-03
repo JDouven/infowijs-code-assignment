@@ -34,6 +34,7 @@ class ApiVerticle : AbstractVerticle() {
       get("/chats").handler(chatController::readAll)
       post("/chats").handler(chatController::create)
       get("/chats/:chatId").handler(messageController::readAll)
+      get("/chats/:chatId/last").handler(messageController::readLast)
       post("/chats/:chatId").handler(messageController::create)
     }
 
