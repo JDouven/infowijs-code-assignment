@@ -4,20 +4,20 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Fragment } from 'react/jsx-runtime';
 import { people } from '../modules/fakeData';
-import { Message, Person } from '../modules/types';
+import { MessageData, PersonData } from '../modules/types';
 import { useNewMessageDialogContext } from '../providers/NewMessageDialogContext';
 
 type NewMessageData = {
   message: string;
-  person: Person;
+  person: PersonData;
 };
 
-async function postMessage(message: NewMessageData): Promise<Message> {
+async function postMessage(message: NewMessageData): Promise<MessageData> {
   const response = await fetch('http://localhost:8888/messages', {
     method: 'POST',
     body: JSON.stringify(message),
   });
-  return response.json().then((json) => Message.fromJSON(json.data));
+  return response.json().then((json) => MessageData.fromJSON(json.data));
 }
 
 function useNewMessageMutation() {
@@ -25,7 +25,7 @@ function useNewMessageMutation() {
   return useMutation({
     mutationFn: postMessage,
     onSuccess: (message) => {
-      queryClient.setQueryData<Message[]>(['messages'], (oldData) =>
+      queryClient.setQueryData<MessageData[]>(['messages'], (oldData) =>
         oldData ? [message, ...oldData] : [message]
       );
     },
